@@ -1,21 +1,21 @@
-DROP TABLE IF EXISTS grocery_items;
-DROP TABLE IF EXISTS shoppers;
-DROP TABLE IF EXISTS orders;
+DROP TABLE IF EXISTS grocery_items CASCADE;
+DROP TABLE IF EXISTS shoppers CASCADE;
+DROP TABLE IF EXISTS orders CASCADE;
 
 CREATE TABLE grocery_items (
-  id INTEGER PRIMARY KEY,
+  id SERIAL PRIMARY KEY,
   name VARCHAR(255),
   price DECIMAL,
   section VARCHAR(255)
 );
 
 CREATE TABLE shoppers (
-  id INTEGER PRIMARY KEY,
+  id SERIAL PRIMARY KEY,
   name VARCHAR(255)
 );
 
 CREATE TABLE orders (
-  id INTEGER PRIMARY KEY,
+  id SERIAL PRIMARY KEY,
   order_date DATE,
   shopper_id INTEGER REFERENCES shoppers
 );
