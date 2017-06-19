@@ -13,6 +13,11 @@ app.get('/subtract', (req, res) => {
   res.send(total.toString())
 })
 
+app.get('/double/:number', (req, res) => {
+  const total = +req.params.number * 2
+  res.send(total.toString())
+})
+
 app.listen(3000, function () {
   console.log('App listening on port 3000!')
 })
