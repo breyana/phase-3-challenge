@@ -8,6 +8,11 @@ app.get('/add', (req, res) => {
   res.send(total.toString())
 })
 
+app.get('/subtract', (req, res) => {
+  const total = +req.query.a - +req.query.b
+  res.send(total.toString())
+})
+
 app.listen(3000, function () {
   console.log('App listening on port 3000!')
 })
