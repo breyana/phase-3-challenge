@@ -9,3 +9,7 @@ const db = pgp(connection)
 const allItems = () => {
   return db.any('SELECT * FROM grocery_items')
 }
+
+const itemsInSection  = (section) => {
+  return db.any('SELECT * FROM grocery_items WHERE section = $1', [section])
+}
