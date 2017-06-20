@@ -7,11 +7,13 @@
     "create": "createdb grocery_store",
     "schema": "psql grocery_store < schema.sql",
     "seed": "psql grocery_store < load-data.sql",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "chai": "^4.0.2",
+    "mocha": "^3.4.2",
     "pg-promise": "^5.9.3"
   }
 }

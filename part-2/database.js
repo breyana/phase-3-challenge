@@ -16,7 +16,7 @@ const allItems = () => {
     })
 }
 
-const itemsInSection  = (section) => {
+const itemsInSection = (section) => {
   return db.any('SELECT * FROM grocery_items WHERE section = $1', [section])
     .then(data => {
       console.log('DATA:', data);
