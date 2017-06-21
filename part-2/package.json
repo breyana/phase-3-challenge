@@ -1,0 +1,19 @@
+{
+  "name": "part-2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "create": "createdb grocery_store",
+    "schema": "psql grocery_store < schema.sql",
+    "seed": "psql grocery_store < load-data.sql",
+    "test": "mocha"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "chai": "^4.0.2",
+    "mocha": "^3.4.2",
+    "pg-promise": "^5.9.3"
+  }
+}
