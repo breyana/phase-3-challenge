@@ -17,8 +17,10 @@ app.get('/api/days/:day', (request, response) => {
   }
 
   if (daysOfWeek[day]) {
+    response.set('Content-Type', 'text/plain')
     response.status(200).send(`${daysOfWeek[day]}`)
   } else {
+    response.set('Content-Type', 'text/plain')
     response.status(404).send(`'${day}' is not a valid day!`)
   }
 })
