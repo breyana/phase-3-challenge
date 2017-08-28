@@ -1,11 +1,12 @@
 #! /usr/local/bin/node
+const productListBySection = require('./commands/product-list')
 
 const command = process.argv[2]
 const argument = process.argv[3]
 
 switch(command) {
   case 'product-list':
-    console.log('This is the product list command')
+    productListBySection(argument)
     break;
 
   case 'shopper-orders':
