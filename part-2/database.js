@@ -1,5 +1,8 @@
 const pgp = require('pg-promise')()
-const db = pgp('postgres://breyana@localhost:5432/grocery_store')
+
+const db = pgp({
+  database: 'grocery_store'
+})
 
 const allItems = () => {
   return db.any('SELECT * FROM grocery_items')
