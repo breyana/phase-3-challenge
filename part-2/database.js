@@ -6,12 +6,6 @@ const db = pgp({
 
 const allItems = () => {
   return db.any('SELECT * FROM grocery_items')
-    .then(data => {
-      console.log('DATA:', data);
-    })
-    .catch(error => {
-      console.log('ERROR:', error);
-    })
 }
 
 const itemsInSection = (section) => {
