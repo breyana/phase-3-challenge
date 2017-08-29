@@ -20,6 +20,7 @@ clear.addEventListener('click', function(event) {
   cartContents.innerHTML = ''
   cartCounter = 0
   cartAmount.innerText = `(${cartCounter})`
+  cartTotal.innerText = '$0.00'
 })
 
 addToCartButtons.forEach(function(button) {
@@ -46,8 +47,6 @@ addToCartButtons.forEach(function(button) {
 
     const priceNumber = price.replace(/\$/g, '')
     const totalNumber = cartTotal.innerText.replace(/\$/g, '')
-    console.log(priceNumber)
-    console.log(totalNumber)
     const newTotal = parseFloat(priceNumber) + parseFloat(totalNumber)
     cartTotal.innerText = `$${newTotal}`
   })
