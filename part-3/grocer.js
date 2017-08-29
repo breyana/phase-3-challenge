@@ -2,10 +2,10 @@ const modal = document.querySelector('.modal')
 const cartButton = document.querySelector('#cart-button')
 const x = document.querySelector('.close')
 
-cartButton.onclick = function() {
+cartButton.addEventListener('click', function() {
   modal.style.display = 'block'
-}
+})
 
-x.onclick = function() {
+x.addEventListener('click', function() {
   modal.style.display = 'none'
-}
+})
