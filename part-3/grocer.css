@@ -114,7 +114,7 @@ body {
   flex: 0;
 }
 
-/* MODAL */
+/* SHOPPING CART */
 .modal {
     display: none;
     position: fixed;
@@ -149,3 +149,8 @@ body {
     float: right;
     font-size: 28px;
     font-weight: bold;
+}
+
+.cart-contents {
+  padding: 0px;
+}
