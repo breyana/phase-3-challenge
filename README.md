@@ -1,4 +1,4 @@
-# Phase 3 Interview Challenge
+# Phase 3 Interview Challenge B
 
 This is the challenge for getting into phase 3. There are 3 parts to the challenge.
 
@@ -19,87 +19,154 @@ Each requirement has a point value. A fully complete requirement gets full point
 
 ## General Requirements
 
-- [x] __10:__ Solution is in a public repository called `phase-3-challenge`
-- [x] __10:__ Solution repository has 3 folders: `part-1`, `part-2`, and `part-3`.
+- [ ] __10:__ Solution is in a public repository called `phase-3-challenge`.
+- [ ] __10:__ Solution repository has 3 folders: `part-1`, `part-2`, and `part-3`.
+- [ ] __10:__ Solution repository inclu
+a `.gitignore` ignoring files that don't shouldn't be committed (e.g. `node_modules/`, `*.log` files).
+- [ ] __10:__ Parts 1 and 2 have their own `package.json` specifying dependencies.
 - [ ] __20:__ Git history shows frequent commits.
 
 ## Part 1: Simple web app
 
-Build a very basic web app to perform basic calculations on numbers supplied in the URL.
+Build a very basic web API which conforms to the routes listed below.
 
-Use Express. You don't need to use an HTML templater like EJS or Pug, just respond with plain text.
+Use Express. You don't need to use an HTML templater like EJS or Pug, just respond with plain text. (You can use `curl` or `Postman` to check whether the routes work)
 
 The web server should provide the following routes:
 
 ```
-/zero
-/add
-/subtract
-/double/:number
+GET /api/days/:day
+POST /api/array/concat
 ```
 
-All routes just respond with a plain text response. The `/add` and `/subtract` routes all take a query string with two numbers `a` and `b`.
-
-Example requests and responses:
-
+#### Route 1: GET /api/days/:day
+Your application should define an object called `daysOfWeek`
+```javascript
+daysOfWeek = {monday: 1, tuesday:2, wednesday: 3, thursday: 4, friday: 5, saturday: 6, sunday: 7}
 ```
-request: GET /zero
-response: 0
+The response is determined by looking up the url param passed into the route `:day` from the `daysOfWeek` object. An example will make this clearer -
+```
+request: GET /api/days/wednesday
+response: 3
+status: 200
 
-request: GET /add?a=4&b=8
-response: 12
+request: GET /api/days/friday
+response: 5
+status: 200
 
-request: GET /subtract?a=9&b=2
-response: 7
+request: GET /api/days/holiday
+response: `'holiday' is not a valid day!`
+status: 400
+```
 
-request: GET /double/9
-response: 18
+#### Route 2: POST /api/array/concat
+Example requests
+```
+request: POST /api/array/concat
+request body params: {"array1": [1,3],
+                      "array2": [5,6]}
+request content type: application/json
+response: {"result": [1,3,5,6]}
+response content type: application/json
+
+request: POST /api/array/concat
+request body params: {"array1": "abcd",
+                      "array2": [5,6]}
+request content type: application/json
+response status code: 400
+response: {"error": "Input data should be of type Array."}
+response content type: application/json
 ```
 
 ### Requirements
 
-- [x] __10:__ All files are stored under the `part-1/` folder
-- [x] __10:__ All dependencies are specified in a `package.json` file
-- [x] __10:__ Web server can be started with `npm start` command
-- [x] __20:__ GET requests to the `/zero` route respond with plain text `0`
-- [x] __20:__ GET requests to the `/add` route add the two numbers provided in the query string variables `a` and `b` and respond with the result
-- [x] __20:__ GET requests to the `/subtract` route subtract the value of the query string variable `b` from the query string variable `a` and respond with the result
-- [x] __20:__ GET requests to the `/double/:number` route doubles the number provided in the URL (in place of `:number`) and responds with the result
+- [ ] __10:__ All files are stored under the `part-1/` folder
+- [ ] __10:__ All dependencies are specified in a `package.json` file
+- [ ] __10:__ Web server can be started with `npm start` command
+- [ ] __20:__ GET requests to the `/api/days/:day` route responds with  content type `text/plain`, as described in the example above
+- [ ] __80:__ POST requests to the `/api/array/concat`, concatenates the two arrays provided in the request body and responds with the result. An invalid array should return a 400 response.
 
-## Part 2: Database for grocery store & tests
+## Part 2: Command Line Grocery Store
 
-Build a small PostgreSQL database for a grocery store, then connect and write queries using Node.js. Same idea as in part 3, but focused on the database side.
+Build a command line tool that emulates a grocery store. The tool will interact with a PostgreSQL database to store and retrieve information. You will have to design a database to store **grocery items**, **shoppers**, and **orders**. Let's call the database `grocery_store`.
 
-Design a database to store **grocery items**, **shoppers**, and shoppers' **orders**. Let's call the database `grocery_store` (so clever, I know).
+You'll need to design the schema and write some SQL statements to insert data. Look closely at the commands and their sample outputs to determine how to design your schema.
 
-You'll need to design the schema and write some SQL statements to insert data. Look closely at the requirements to determine how to design your schema.
+Write a command line script called `store` that retrieves information from the database
 
-Use the provided [grocery item data][grocery-data] to seed your grocery items table, and write some custom insert statements to add 3-5 rows to the shoppers and orders tables and any join tables you may need to connect them all.
+The `store` command should support the following sub commands:
 
-Then, use [pg-promise](https://www.npmjs.com/package/pg-promise) and [Mocha](https://mochajs.org/) + [Chai](http://chaijs.com/) to write and test database queries.
+| command        | description                                              | example usage                            |
+|----------------|----------------------------------------------------------|------------------------------------------|
+| product-list   | lists all products which belong to the given section     | ./store product-list `<product-section>` |
+| shopper-orders | lists the orders for a given shopper                     | ./store shopper-orders `<shopper-id>`    |
+| real-shoppers  | lists the names of all shoppers who have at least 1 order | ./store real-shoppers                    |
+
+### Example Usage
+
+Note: The example output below is not exactly what you would see in reality. (Since the output would depend on the seed data that you add to your database) Use the output below as a template for how each command should display the data.
+
+#### List all `products` from a `section`
+```
+$ ./store product-list dairy
+|--------------+---------+
+| Product Name | Section |
+|--------------+---------+
+| Butter       | dairy   |
+| Cheese       | dairy   |
+| Cream Cheese | dairy   |
+| Eggs         | dairy   |
+| Milk         | dairy   |
+| Sour Cream   | dairy   |
+| Yogurt       | dairy   |
+|--------------+---------+
+```
+
+#### List all orders for a given `shopper id`, returns the `order id`, and the total cost of the order.
+```
+$ ./store shopper-orders 1
+|----------+------------|
+| order id | total cost |
+|----------+------------|
+|        1 |      27.99 |
+|        4 |      18.75 |
+|----------+------------|
+```
+
+#### List all the `shoppers` that have at least 1 order, and also display the number of orders for them.
+```
+$ ./store real-shoppers
+|--------------+------------------|
+| shopper name | number of orders |
+|--------------+------------------|
+| Shanti       |                1 |
+| Mary         |                2 |
+| Justin       |                2 |
+|--------------+------------------|
+```
 
 ### Requirements
-
-- [x] __10:__ All files are stored under the `part-2/` folder
-- [x] __10:__ Database schema (all `CREATE TABLE` statements) is defined in a file `schema.sql`
-- [x] __10:__ SQL script to insert [grocery seed data][grocery-data] and load from CSV is created in a file `load-data.sql`
+- [ ] __10:__ All files are stored under the `part-2/` folder
+- [ ] __10:__ Database schema (all `CREATE TABLE` statements) is defined in a file `schema.sql`
+- [ ] __10:__ SQL script to insert [grocery seed data][grocery-data] and load from CSV is created in a file `load-data.sql`
+- [ ] __10:__ SQL statements to insert data into the `orders` and `shoppers` table is added to the file `load-data.sql`. (Add at least 5 rows in each table)
 - [ ] __10:__ All database query functions are written in a file `database.js`, and tests for queries are written in a file `database_test.js`
+- [ ] __10:__ Tests can be run with the command `$ npm test`
 
-Implement these functions in `database.js` using [pg-promise](https://www.npmjs.com/package/pg-promise) to make the following queries:
+User Stories: Ensure that your schema design can satisfy the following scenarios
+- [ ] __10__: As a shopper I can fetch all my orders
+- [ ] __10__: As a shopper I can have multiple items in an order. (Assume the quantity of each item is always 1)
 
-- [ ] __20:__ `allItems()` : Find the IDs, names, prices, and sections for all grocery **items**
-- [ ] __20:__ `itemsInSection(<section>)` : Find the IDs and names of all grocery **items** in the given section
-- [ ] __20:__ `cheapItems()` : Find the IDs and prices of all grocery **items** that cost less than $10.00, ordered from lowest to highest price
-- [ ] __20:__ `countItemsInSection(<section>)` : Get the count of all grocery **items** in the given section
-- [ ] __20:__ `mostRecentOrders()` : Find the IDs and order dates for the 10 most recent **orders**
-- [ ] __20:__ `lastShopperName()` : Find the shopper's name who made the most recent **order**
-- [ ] __20:__ `orderTotal(<ID>)` : Find the sum of all prices for items for a specific **order**
+Command line interface requirements
+- [ ] __10__: Create a command line Node script called `store.js`
+- [ ] __20__: Command `product-list` has been implemented
+- [ ] __40__: Command `shopper-orders` has been implemented
+- [ ] __30__: Command `real-shoppers` has been implemented
 
 Write tests with [Mocha](https://mochajs.org/) + [Chai](http://chaijs.com/) in `database_test.js` that assert:
-
-- [ ] __20:__ A call to `itemsInSection("bulk")` returns the items `"Flour"`, `"Pasta"`, and `"Rice"`
-- [ ] __20:__ A call to `cheapItems()` returns the item `"Fish"` as the first item and `"Honey"` as the last item
-- [ ] __20:__ A call to `countItemsInSection("packaged")` returns `5`
+- [ ] __20__: The database function for the command `product-list` is tested
+- [ ] __20__: The database function for the command `shopper-orders` is tested
+- [ ] __20__: The database function for the command `real-shoppers` is tested
 
 ## Part 3: Web interface for grocery store
 
@@ -109,17 +176,20 @@ You only need to write HTML, CSS, and JavaScript. No web server is required.
 
 The initial layout has already been provided for you in the [grocer.html][grocer-html] and [grocer.css][grocer-css] files. From this base, build the modal and add interactive behavior with JS.
 
+Note that this interface has been intentionally simplified for the purposes of this challenge: for example, when adding multiple items it will just duplicate the same item instead of adding to a quantity.
+
 ### Wireframe
 
 Clicking on the "Cart" button opens the cart modal.
 
-![modal](https://user-images.githubusercontent.com/709100/26839839-3b224ad6-4ab2-11e7-8bb4-24e715ca53bd.png)
+![modal](https://user-images.githubusercontent.com/709100/28130774-e553e572-6705-11e7-9477-bc8e17f8e71e.png)
 
 ### Requirements
 
 - [ ] __10:__ All files are stored under the `part-3/` folder
 - [ ] __20:__ No third party CSS or JS libraries are used (all code must be written from scratch)
 - [ ] __10:__ HTML, CSS, and JS are separated into their own files.
+- [ ] __20:__ Clicking on a section in the "Sections" sidebar will jump to that section in the page
 - [ ] __20:__ Clicking on "Add to cart" will update the number displayed next to the "Cart" button to show the total number of items in the user's cart
 - [ ] __20:__ Clicking on the "Cart" button will show the cart modal with a list of all items added
 - [ ] __20:__ Clicking on the "Clear" button in the cart modal removes all items from the cart
