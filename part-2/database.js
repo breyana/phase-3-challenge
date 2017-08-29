@@ -13,7 +13,12 @@ const orderTotalsPerShopper = (shopperId) => {
     [shopperId])
 }
 
+const shoppersWithOrders = () => {
+  return db.any('SELECT shoppers.name, COUNT (orders.id) AS "number of orders" FROM shoppers JOIN orders ON shoppers.id = orders.shopper_id GROUP BY shoppers.name')
+}
+
 module.exports = {
   itemsInSection,
-  orderTotalsPerShopper
+  orderTotalsPerShopper,
+  shoppersWithOrders
 }

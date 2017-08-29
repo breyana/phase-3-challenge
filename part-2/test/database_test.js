@@ -1,5 +1,5 @@
 const { expect } = require('chai')
-const { itemsInSection, orderTotalsPerShopper } = require('../database.js')
+const { itemsInSection, orderTotalsPerShopper, shoppersWithOrders } = require('../database.js')
 
 describe('Database Queries', () => {
   context('itemsInSection', () => {
@@ -45,6 +45,37 @@ describe('Database Queries', () => {
             "total cost": "6.36"
           }])
         })
+    })
+  })
+
+  context('shoppersWithOrders', () => {
+    it('shoppersWithOrders() returns a list of existing shoppers that have 1 or more orders',
+      () => {
+        return shoppersWithOrders()
+          .then(data => {
+            expect(data).to.eql([
+              {
+                "name": "Peter Poland",
+                "number of orders": "1"
+              },
+              {
+                "name": "Georgina Gregory",
+                "number of orders": "3"
+              },
+              {
+                "name": "Yenni Yolanda",
+                "number of orders": "1"
+              },
+              {
+                "name": "Bobby McGee",
+                "number of orders": "1"
+              },
+              {
+                "name": "Betty Lou",
+                "number of orders": "1"
+              }
+            ])
+          })
     })
   })
 })
