@@ -4,6 +4,7 @@ const x = document.querySelector('.close')
 const addToCartButtons = document.querySelectorAll('.item button')
 const cartContents = document.querySelector('.cart-contents')
 const cartAmount = document.querySelector('#cart-item-count')
+const clear = document.querySelector('.modal-content button')
 let cartCounter = 0
 
 cartButton.addEventListener('click', function() {
@@ -12,6 +13,12 @@ cartButton.addEventListener('click', function() {
 
 x.addEventListener('click', function() {
   modal.style.display = 'none'
+})
+
+clear.addEventListener('click', function(event) {
+  cartContents.innerHTML = ''
+  cartCounter = 0
+  cartAmount.innerText = `(${cartCounter})`
 })
 
 addToCartButtons.forEach(function(button) {
