@@ -4,6 +4,7 @@ const x = document.querySelector('.close')
 const addToCartButtons = document.querySelectorAll('.item button')
 const cartContents = document.querySelector('.cart-contents')
 const cartAmount = document.querySelector('#cart-item-count')
+const cartTotal = document.querySelector('.total')
 const clear = document.querySelector('.modal-content button')
 let cartCounter = 0
 
@@ -42,5 +43,12 @@ addToCartButtons.forEach(function(button) {
 
     cartCounter++
     cartAmount.innerText = `(${cartCounter})`
+
+    const priceNumber = price.replace(/\$/g, '')
+    const totalNumber = cartTotal.innerText.replace(/\$/g, '')
+    console.log(priceNumber)
+    console.log(totalNumber)
+    const newTotal = parseFloat(priceNumber) + parseFloat(totalNumber)
+    cartTotal.innerText = `$${newTotal}`
   })
 })
