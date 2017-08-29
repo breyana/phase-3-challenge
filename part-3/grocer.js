@@ -3,6 +3,8 @@ const cartButton = document.querySelector('#cart-button')
 const x = document.querySelector('.close')
 const addToCartButtons = document.querySelectorAll('.item button')
 const cartContents = document.querySelector('.cart-contents')
+const cartAmount = document.querySelector('#cart-item-count')
+let cartCounter = 0
 
 cartButton.addEventListener('click', function() {
   modal.style.display = 'block'
@@ -29,6 +31,9 @@ addToCartButtons.forEach(function(button) {
     priceSpan.className = 'item-price'
     newListItem.appendChild(priceSpan)
 
-    cartContents.appendChild(newListItem)  
+    cartContents.appendChild(newListItem)
+
+    cartCounter++
+    cartAmount.innerText = `(${cartCounter})`
   })
 })
